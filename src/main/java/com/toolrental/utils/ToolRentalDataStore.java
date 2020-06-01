@@ -10,6 +10,15 @@ public class ToolRentalDataStore {
     private HashMap<String, ToolType> typeToToolTypeMap;
     private HashMap<String, Tool> codeToToolMap;
 
+    private static final String LADDER_TYPE = "Ladder";
+    private static final String CHAINSAW_TYPE = "Chainsaw";
+    private static final String JACKHAMMER_TYPE = "Jackhammer";
+
+    private static final String WERNER_LADDER_CODE = "LADW";
+    private static final String STIHL_CHAINSAW_CODE = "CHNS";
+    private static final String RIDGID_JACKHAMMER_CODE = "JAKR";
+    private static final String DEWALT_JACKHAMMER_CODE = "JAKD";
+
     public ToolRentalDataStore(){
         setToolTypeData();
         setToolData(typeToToolTypeMap);
@@ -21,24 +30,17 @@ public class ToolRentalDataStore {
 
     private void setToolTypeData(){
         typeToToolTypeMap = new HashMap();
-        ToolType ladder = new ToolType("Ladder", new BigDecimal("1.99"), true, true, false);
-        ToolType chainsaw = new ToolType("Chainsaw", new BigDecimal("1.49"), true, false, true);
-        ToolType jackhammer = new ToolType("Jackhammer", new BigDecimal("2.99"), true, false, false);
-        typeToToolTypeMap.put(ladder.getType(), ladder);
-        typeToToolTypeMap.put(chainsaw.getType(), chainsaw);
-        typeToToolTypeMap.put(jackhammer.getType(), jackhammer);
+        typeToToolTypeMap.put(LADDER_TYPE, new ToolType(LADDER_TYPE, new BigDecimal("1.99"), true, true, false));
+        typeToToolTypeMap.put(CHAINSAW_TYPE,  new ToolType(CHAINSAW_TYPE, new BigDecimal("1.49"), true, false, true));
+        typeToToolTypeMap.put(JACKHAMMER_TYPE, new ToolType(JACKHAMMER_TYPE, new BigDecimal("2.99"), true, false, false));
     }
 
     private void setToolData(HashMap<String, ToolType> typeToToolTypeMap){
         codeToToolMap = new HashMap();
-        Tool ladw = new Tool("LADW", typeToToolTypeMap.get("Ladder"), "Werner");
-        Tool chns = new Tool("CHNS", typeToToolTypeMap.get("Chainsaw"), "Stihl");
-        Tool jakr = new Tool("JAKR", typeToToolTypeMap.get("Jackhammer"), "Ridgid");
-        Tool jakd = new Tool("JAKD", typeToToolTypeMap.get("Jackhammer"), "DeWalt");
-        codeToToolMap.put(ladw.getCode(), ladw);
-        codeToToolMap.put(chns.getCode(), chns);
-        codeToToolMap.put(jakr.getCode(), jakr);
-        codeToToolMap.put(jakd.getCode(), jakd);
+        codeToToolMap.put(WERNER_LADDER_CODE, new Tool(WERNER_LADDER_CODE, typeToToolTypeMap.get(LADDER_TYPE), "Werner"));
+        codeToToolMap.put(STIHL_CHAINSAW_CODE, new Tool(STIHL_CHAINSAW_CODE, typeToToolTypeMap.get(CHAINSAW_TYPE), "Stihl"));
+        codeToToolMap.put(RIDGID_JACKHAMMER_CODE, new Tool(RIDGID_JACKHAMMER_CODE, typeToToolTypeMap.get(JACKHAMMER_TYPE), "Ridgid"));
+        codeToToolMap.put(DEWALT_JACKHAMMER_CODE, new Tool(DEWALT_JACKHAMMER_CODE, typeToToolTypeMap.get(JACKHAMMER_TYPE), "DeWalt"));
     }
 
 }
