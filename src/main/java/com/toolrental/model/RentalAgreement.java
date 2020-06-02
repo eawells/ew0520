@@ -25,17 +25,19 @@ public class RentalAgreement {
     private BigDecimal finalCharge;
 
     public void printReceipt(){
-        System.out.println("Tool code: LADW\n" +
-                "Tool type: Ladder\n" +
-                "Tool brand: Werner\n" +
-                "Rental days: 1\n" +
-                "Check out date: 05/28/20\n" +
-                "Due date: 05/29/20\n" +
-                "Daily rental charge: $1.99\n" +
-                "Charge days: 1\n" +
-                "Pre-discount charge: $1.99\n" +
-                "Discount percent: 0%\n" +
-                "Discount amount: $0.00\n" +
-                "Final charge: $1.99");
+        StringBuilder receipt = new StringBuilder();
+        receipt.append("Tool code: " + toolCode +
+                "\nTool type: " + toolType +
+                "\nTool brand: " + toolBrand +
+                "\nRental days: 1" +
+                "\nCheck out date: 05/28/20" +
+                "\nDue date: 05/29/20" +
+                "\nDaily rental charge: $" + dailyCharge.toString() +
+                "\nCharge days: 1" +
+                "\nPre-discount charge: $" + preDiscountCharge.toString() +
+                "\nDiscount percent: 0%" +
+                "\nDiscount amount: $0.00" +
+                "\nFinal charge: $" + finalCharge.toString());
+        System.out.println(receipt);
     }
 }
