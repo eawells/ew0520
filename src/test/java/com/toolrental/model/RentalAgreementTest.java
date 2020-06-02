@@ -72,4 +72,29 @@ public class RentalAgreementTest {
         agreement.printReceipt();
         assertEquals(expectedReceipt, outContent.toString().trim());
     }
+
+    @Test
+    public void givenATwoDayRentalAgreement_WhenPrintReceiptCalled_ThenAllFieldsArePrinted(){
+        LocalDate rentalDate = LocalDate.of(2020, 05, 26);
+        LocalDate dueDate = LocalDate.of(2020, 05, 28);
+
+        RentalAgreement agreement = new RentalAgreement("CHNS", "Chainsaw", "Stihl", 2, rentalDate, dueDate,
+                                        new BigDecimal("1.49"), 2, new BigDecimal("2.98"), 0,
+                                        new BigDecimal("0"), new BigDecimal("2.98"));
+        String expectedReceipt =
+                "Tool code: CHNS\n" +
+                "Tool type: Chainsaw\n" +
+                "Tool brand: Stihl\n" +
+                "Rental days: 2\n" +
+                "Check out date: 05/26/20\n" +
+                "Due date: 05/28/20\n" +
+                "Daily rental charge: $1.49\n" +
+                "Charge days: 2\n" +
+                "Pre-discount charge: $2.98\n" +
+                "Discount percent: 0%\n" +
+                "Discount amount: $0.00\n" +
+                "Final charge: $2.98";
+        agreement.printReceipt();
+        assertEquals(expectedReceipt, outContent.toString().trim());
+    }
 }
