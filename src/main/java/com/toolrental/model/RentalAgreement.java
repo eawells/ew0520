@@ -47,16 +47,23 @@ public class RentalAgreement {
         receipt.append(formatter.format(dueDate));
 
         receipt.append("\nDaily rental charge: $");
-        receipt.append(dailyCharge.toString());
+        receipt.append(dailyCharge.setScale(2));
 
         receipt.append("\nCharge days: ");
         receipt.append(chargeableDays);
 
         receipt.append("\nPre-discount charge: $");
-        receipt.append(preDiscountCharge);
+        receipt.append(preDiscountCharge.setScale(2));
 
-        receipt.append("\nDiscount percent: 0%\nDiscount amount: $0.00\nFinal charge: $");
-        receipt.append(finalCharge);
+        receipt.append("\nDiscount percent: ");
+        receipt.append(discountPercent);
+        receipt.append("%");
+
+        receipt.append("\nDiscount amount: $");
+        receipt.append(discountAmount.setScale(2));
+
+        receipt.append("\nFinal charge: $");
+        receipt.append(finalCharge.setScale(2));
 
         System.out.println(receipt);
     }
