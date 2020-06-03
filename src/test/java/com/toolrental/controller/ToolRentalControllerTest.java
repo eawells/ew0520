@@ -19,4 +19,14 @@ public class ToolRentalControllerTest {
 
         assertEquals(new BigDecimal("1.99"), actual.getFinalCharge());
     }
+
+    @Test
+    public void givenAJackhammerRental_WhenRentingForOneWeekday_ThenTheCostIs149(){
+        ToolRentalController controller = new ToolRentalController();
+
+        LocalDate date = LocalDate.of(2020, 05, 28);
+        RentalAgreement actual = controller.checkout("JAKR", 1, 0, date);
+
+        assertEquals(new BigDecimal("2.99"), actual.getFinalCharge());
+    }
 }
