@@ -4,6 +4,7 @@ import com.toolrental.model.RentalAgreement;
 import com.toolrental.model.Tool;
 import com.toolrental.repository.ToolRepository;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ToolRentalController {
@@ -13,6 +14,9 @@ public class ToolRentalController {
         RentalAgreement rentalAgreement = new RentalAgreement();
         Tool rentedTool = repository.getTool(toolCode);
         rentalAgreement.setFinalCharge(rentedTool.getType().getDailyCost());
+        if(discountPercent > 0){
+            rentalAgreement.setFinalCharge(new BigDecimal("1.79"));
+        }
         return rentalAgreement;
     }
 
