@@ -62,7 +62,7 @@ public class ToolRentalControllerTest {
     }
 
     @Test
-    public void givenAJackhammerRental_WhenRentingFor2WeekdaysDays_ThenTheCostIs598Cents(){
+    public void givenAJackhammerRental_WhenRentingFor2Weekdays_ThenTheCostIs598Cents(){
         RentalAgreement actual = controller.checkout("JAKD", 2, 0, date);
 
         assertEquals(new BigDecimal("5.98"), actual.getFinalCharge());
@@ -82,5 +82,13 @@ public class ToolRentalControllerTest {
         RentalAgreement actual = controller.checkout("CHNS", 3, 0, date);
 
         assertEquals(1, actual.getChargeableDays());
+    }
+
+    @Test
+    public void givenAChainsawRental_WhenRentingFor2WeekdaysAndWeekend_ThenChargeableDaysIs2(){
+        date = LocalDate.of(2020, 05, 29);
+        RentalAgreement actual = controller.checkout("CHNS", 4, 0, date);
+
+        assertEquals(2, actual.getChargeableDays());
     }
 }

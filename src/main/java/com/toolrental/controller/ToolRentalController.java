@@ -15,11 +15,13 @@ public class ToolRentalController {
         RentalAgreement rentalAgreement = new RentalAgreement();
         Tool rentedTool = repository.getTool(toolCode);
 
+        int chargeableDays = 0;
         for(int i = 1; i <= rentalDayCount; i++){
             if(isWeekday(checkoutDate.plusDays(i))){
-                rentalAgreement.setChargeableDays(1);
+                chargeableDays++;
             }
         }
+        rentalAgreement.setChargeableDays(chargeableDays);
 
         BigDecimal total = rentedTool.getType().getDailyCost().multiply(new BigDecimal(rentalDayCount));
         if(discountPercent > 0){
