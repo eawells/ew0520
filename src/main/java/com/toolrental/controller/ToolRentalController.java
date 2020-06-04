@@ -17,6 +17,10 @@ public class ToolRentalController {
     }
 
     public RentalAgreement checkout(String toolCode, int rentalDayCount, int discountPercent, LocalDate checkoutDate) {
+        if(discountPercent < 0 || discountPercent > 100){
+            throw new IllegalArgumentException("Please enter a discount percent between 0 and 100");
+        }
+
         RentalAgreement rentalAgreement = new RentalAgreement();
 
         rentalAgreement.setToolCode(toolCode);

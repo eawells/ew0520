@@ -2,7 +2,9 @@ package com.toolrental.controller;
 
 import com.toolrental.model.RentalAgreement;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,6 +20,9 @@ public class ToolRentalControllerTest {
         controller = new ToolRentalController();
         date = LocalDate.of(2020, 05, 27);
     }
+
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
 
     @Test
     public void givenALadderRental_WhenRentingForOneWeekday_ThenTheCostIs199Cents(){
@@ -181,5 +186,21 @@ public class ToolRentalControllerTest {
         RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
 
         assertEquals(new BigDecimal("1.99"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenALadderRental_WhenDiscountIsGreaterThan100_ThenErrorIsThrown(){
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Please enter a discount percent between 0 and 100");
+
+        controller.checkout("LADW", 1, 101, date);
+    }
+
+    @Test
+    public void givenALadderRental_WhenDiscountIsLessThan0_ThenErrorIsThrown(){
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Please enter a discount percent between 0 and 100");
+
+        controller.checkout("LADW", 1, -1, date);
     }
 }
