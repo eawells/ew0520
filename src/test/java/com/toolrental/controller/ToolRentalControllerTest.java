@@ -110,4 +110,12 @@ public class ToolRentalControllerTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void givenALadderRental_WhenRentingFor1DayOfWeekend_ThenTheCostIs199Cents(){
+        date = LocalDate.of(2020, 05, 29);
+        RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
+
+        assertEquals(new BigDecimal("1.99"), actual.getFinalCharge());
+    }
 }
