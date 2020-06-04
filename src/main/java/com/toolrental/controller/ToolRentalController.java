@@ -5,6 +5,7 @@ import com.toolrental.model.Tool;
 import com.toolrental.repository.ToolRepository;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class ToolRentalController {
@@ -13,10 +14,16 @@ public class ToolRentalController {
     public RentalAgreement checkout(String toolCode, int rentalDayCount, int discountPercent, LocalDate checkoutDate) {
         RentalAgreement rentalAgreement = new RentalAgreement();
         Tool rentedTool = repository.getTool(toolCode);
-        rentalAgreement.setFinalCharge(rentedTool.getType().getDailyCost());
+
+        BigDecimal total = rentedTool.getType().getDailyCost();
+
         if(discountPercent > 0){
-            rentalAgreement.setFinalCharge(new BigDecimal("1.79"));
+            BigDecimal discountAmount = total.multiply(new BigDecimal(.1)).setScale(2, RoundingMode.HALF_UP);
+            total = total.subtract(discountAmount);
         }
+
+        rentalAgreement.setFinalCharge(total);
+
         return rentalAgreement;
     }
 

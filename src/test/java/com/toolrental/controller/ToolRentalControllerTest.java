@@ -48,4 +48,12 @@ public class ToolRentalControllerTest {
 
         assertEquals(new BigDecimal("1.79"), actual.getFinalCharge());
     }
+
+    @Test
+    public void givenAChainsawRental_WhenDiscountIs10Percent_ThenTheCostIs134Cents(){
+        LocalDate date = LocalDate.of(2020, 05, 28);
+        RentalAgreement actual = controller.checkout("CHNS", 1, 10, date);
+
+        assertEquals(new BigDecimal("1.34"), actual.getFinalCharge());
+    }
 }
