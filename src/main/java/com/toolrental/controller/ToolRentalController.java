@@ -69,6 +69,7 @@ public class ToolRentalController {
         return discountAmount;
     }
 
+    //Days of the week 6 and 7 represent Saturday and Sunday
     private boolean isWeekend(LocalDate date){
         if(date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7){
             return true;
@@ -76,9 +77,15 @@ public class ToolRentalController {
         return false;
     }
 
+    //Day of week 5 represents Friday
     private boolean isHoliday(LocalDate date) {
-        if(date.getMonth().getValue() == 7 && date.getDayOfMonth() == 4){
-            return true;
+        if(date.getMonth().getValue() == 7){
+            if(date.getDayOfMonth() == 4 && !isWeekend(date)){
+                return true;
+            }
+            if(date.getDayOfMonth() == 3 && date.getDayOfWeek().getValue() == 5){
+                return true;
+            }
         }
         return false;
     }
