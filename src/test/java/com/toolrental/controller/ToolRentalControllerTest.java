@@ -60,4 +60,11 @@ public class ToolRentalControllerTest {
 
         assertEquals(new BigDecimal("2.54"), actual.getFinalCharge());
     }
+
+    @Test
+    public void givenAJackhammerRental_WhenRentingFor2WeekdaysDays_ThenTheCostIs598Cents(){
+        RentalAgreement actual = controller.checkout("JAKD", 2, 0, date);
+
+        assertEquals(new BigDecimal("5.98"), actual.getFinalCharge());
+    }
 }

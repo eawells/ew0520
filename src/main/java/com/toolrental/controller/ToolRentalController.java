@@ -15,7 +15,7 @@ public class ToolRentalController {
         RentalAgreement rentalAgreement = new RentalAgreement();
         Tool rentedTool = repository.getTool(toolCode);
 
-        BigDecimal total = rentedTool.getType().getDailyCost();
+        BigDecimal total = rentedTool.getType().getDailyCost().multiply(new BigDecimal(rentalDayCount));
 
         if(discountPercent > 0){
             double percent = (double) discountPercent/100;
