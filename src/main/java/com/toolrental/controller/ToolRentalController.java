@@ -10,7 +10,11 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 
 public class ToolRentalController {
-    ToolRepository repository = new ToolRepository();
+    ToolRepository repository;
+
+    public ToolRentalController(){
+        repository = new ToolRepository();
+    }
 
     public RentalAgreement checkout(String toolCode, int rentalDayCount, int discountPercent, LocalDate checkoutDate) {
         RentalAgreement rentalAgreement = new RentalAgreement();
@@ -69,29 +73,35 @@ public class ToolRentalController {
         return discountAmount;
     }
 
-    //Days of the week 6 and 7 represent Saturday and Sunday
     private boolean isWeekend(LocalDate date){
-        if(date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7){
+        int saturday = 6;
+        int sunday = 7;
+
+        if(date.getDayOfWeek().getValue() == saturday || date.getDayOfWeek().getValue() == sunday){
             return true;
         }
         return false;
     }
 
-    //Days of the week 5 and 1 represent Friday and Monday
     private boolean isHoliday(LocalDate date) {
-        if(date.getMonth().getValue() == 7){
+        int july = 7;
+        int september = 9;
+        int monday = 1;
+        int friday = 5;
+
+        if(date.getMonth().getValue() == july){
             if(date.getDayOfMonth() == 4 && !isWeekend(date)){
                 return true;
             }
-            if(date.getDayOfMonth() == 3 && date.getDayOfWeek().getValue() == 5){
+            if(date.getDayOfMonth() == 3 && date.getDayOfWeek().getValue() == friday){
                 return true;
             }
-            if(date.getDayOfMonth() == 5 && date.getDayOfWeek().getValue() == 1){
+            if(date.getDayOfMonth() == 5 && date.getDayOfWeek().getValue() == monday){
                 return true;
             }
         }
 
-        if(date.getMonth().getValue() == 9 && date.getDayOfWeek().getValue() == 1 && date.getDayOfMonth() <= 7){
+        if(date.getMonth().getValue() == september && date.getDayOfWeek().getValue() == monday && date.getDayOfMonth() <= 7){
             return true;
         }
 
