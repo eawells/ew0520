@@ -11,15 +11,16 @@ import static org.junit.Assert.assertEquals;
 
 public class ToolRentalControllerTest {
     private ToolRentalController controller;
+    private LocalDate date;
 
     @Before
     public void setUp(){
         controller = new ToolRentalController();
+        date = LocalDate.of(2020, 05, 28);
     }
 
     @Test
     public void givenALadderRental_WhenRentingForOneWeekday_ThenTheCostIs199Cents(){
-        LocalDate date = LocalDate.of(2020, 05, 28);
         RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
 
         assertEquals(new BigDecimal("1.99"), actual.getFinalCharge());
@@ -27,7 +28,6 @@ public class ToolRentalControllerTest {
 
     @Test
     public void givenAChainsawRental_WhenRentingForOneWeekday_ThenTheCostIs149Cents(){
-        LocalDate date = LocalDate.of(2020, 05, 28);
         RentalAgreement actual = controller.checkout("CHNS", 1, 0, date);
 
         assertEquals(new BigDecimal("1.49"), actual.getFinalCharge());
@@ -35,7 +35,6 @@ public class ToolRentalControllerTest {
 
     @Test
     public void givenAJackhammerRental_WhenRentingForOneWeekday_ThenTheCostIs299Cents(){
-        LocalDate date = LocalDate.of(2020, 05, 28);
         RentalAgreement actual = controller.checkout("JAKR", 1, 0, date);
 
         assertEquals(new BigDecimal("2.99"), actual.getFinalCharge());
@@ -43,7 +42,6 @@ public class ToolRentalControllerTest {
 
     @Test
     public void givenALadderRental_WhenDiscountIs10Percent_ThenTheCostIs179Cents(){
-        LocalDate date = LocalDate.of(2020, 05, 28);
         RentalAgreement actual = controller.checkout("LADW", 1, 10, date);
 
         assertEquals(new BigDecimal("1.79"), actual.getFinalCharge());
@@ -51,7 +49,6 @@ public class ToolRentalControllerTest {
 
     @Test
     public void givenAChainsawRental_WhenDiscountIs10Percent_ThenTheCostIs134Cents(){
-        LocalDate date = LocalDate.of(2020, 05, 28);
         RentalAgreement actual = controller.checkout("CHNS", 1, 10, date);
 
         assertEquals(new BigDecimal("1.34"), actual.getFinalCharge());
