@@ -211,4 +211,53 @@ public class ToolRentalControllerTest {
 
         controller.checkout("LADW", 0, 0, date);
     }
+    @Test
+    public void givenAJackhammerRental_WhenDiscountIsGreaterThan100_ThenErrorIsThrown(){
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Please enter a discount percent between 0 and 100");
+
+        date = LocalDate.of(2015, 9, 3);
+
+        controller.checkout("JAKR", 5, 101, date);
+    }
+
+    @Test
+    public void givenALadderRentalAgreement_WhenRentingOverThe4thOfJulyWithDiscount_ThenCostIs358Cents(){
+        date = LocalDate.of(2020, 7, 2);
+        RentalAgreement actual = controller.checkout("LADW", 3, 10, date);
+
+        assertEquals(new BigDecimal("3.58"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenAChainsawRentalAgreement_WhenRentingOverTheWeekendWithDiscount_ThenCostIs335Cents(){
+        date = LocalDate.of(2015, 7, 2);
+        RentalAgreement actual = controller.checkout("CHNS", 5, 25, date);
+
+        assertEquals(new BigDecimal("3.35"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenAJackhammerRentalAgreement_WhenRentingOverLaborDay_ThenCostIs897Cents(){
+        date = LocalDate.of(2015, 9, 3);
+        RentalAgreement actual = controller.checkout("JAKD", 6, 0, date);
+
+        assertEquals(new BigDecimal("8.97"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenAJackhammerRentalAgreement_WhenRentingOverThe4thOfJuly_ThenCostIs1495Cents(){
+        date = LocalDate.of(2015, 7, 2);
+        RentalAgreement actual = controller.checkout("JAKR", 9, 0, date);
+
+        assertEquals(new BigDecimal("14.95"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenAJackhammerRentalAgreement_WhenRentingOverThe4thOfJulyWithDiscount_ThenCostIs149Cents(){
+        date = LocalDate.of(2020, 7, 2);
+        RentalAgreement actual = controller.checkout("JAKR", 4, 50, date);
+
+        assertEquals(new BigDecimal("1.49"), actual.getFinalCharge());
+    }
 }
