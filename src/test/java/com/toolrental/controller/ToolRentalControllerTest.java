@@ -25,21 +25,21 @@ public class ToolRentalControllerTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Test
-    public void givenALadderRental_WhenRentingForOneWeekday_ThenTheCostIs199Cents(){
+    public void givenALadderRental_WhenRentingFor1Weekday_ThenTheCostIs199Cents(){
         RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
 
         assertEquals(new BigDecimal("1.99"), actual.getFinalCharge());
     }
 
     @Test
-    public void givenAChainsawRental_WhenRentingForOneWeekday_ThenTheCostIs149Cents(){
+    public void givenAChainsawRental_WhenRentingFor1Weekday_ThenTheCostIs149Cents(){
         RentalAgreement actual = controller.checkout("CHNS", 1, 0, date);
 
         assertEquals(new BigDecimal("1.49"), actual.getFinalCharge());
     }
 
     @Test
-    public void givenAJackhammerRental_WhenRentingForOneWeekday_ThenTheCostIs299Cents(){
+    public void givenAJackhammerRental_WhenRentingFor1Weekday_ThenTheCostIs299Cents(){
         RentalAgreement actual = controller.checkout("JAKR", 1, 0, date);
 
         assertEquals(new BigDecimal("2.99"), actual.getFinalCharge());
@@ -211,6 +211,7 @@ public class ToolRentalControllerTest {
 
         controller.checkout("LADW", 0, 0, date);
     }
+
     @Test
     public void givenAJackhammerRental_WhenDiscountIsGreaterThan100_ThenErrorIsThrown(){
         exception.expect(IllegalArgumentException.class);
