@@ -62,8 +62,10 @@ public class ToolRentalController {
             if(!toolType.isWeekendChargeable() && isWeekend(currentDate)){
                 chargeableDays--;
             }
-
-            if(!toolType.isHolidayChargeable() && isHoliday(currentDate)){
+            else if(!toolType.isHolidayChargeable() && isHoliday(currentDate)){
+                chargeableDays--;
+            }
+            else if(!toolType.isWeekdayChargeable() && !isWeekend(currentDate)){
                 chargeableDays--;
             }
         }
