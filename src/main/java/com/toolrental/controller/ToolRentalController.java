@@ -90,6 +90,11 @@ public class ToolRentalController {
                 return true;
             }
         }
+
+        if(date.getMonth().getValue() == 9 && date.getDayOfWeek().getValue() == 1 && date.getDayOfMonth() <= 7){
+            return true;
+        }
+
         return false;
     }
 }
