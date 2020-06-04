@@ -77,13 +77,16 @@ public class ToolRentalController {
         return false;
     }
 
-    //Day of week 5 represents Friday
+    //Days of the week 5 and 1 represent Friday and Monday
     private boolean isHoliday(LocalDate date) {
         if(date.getMonth().getValue() == 7){
             if(date.getDayOfMonth() == 4 && !isWeekend(date)){
                 return true;
             }
             if(date.getDayOfMonth() == 3 && date.getDayOfWeek().getValue() == 5){
+                return true;
+            }
+            if(date.getDayOfMonth() == 5 && date.getDayOfWeek().getValue() == 1){
                 return true;
             }
         }

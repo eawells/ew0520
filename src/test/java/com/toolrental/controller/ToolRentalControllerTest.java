@@ -122,9 +122,9 @@ public class ToolRentalControllerTest {
     @Test
     public void givenALadderRental_WhenRentingFor2DaysOfWeekend_ThenTheCostIs398Cents(){
         date = LocalDate.of(2020, 05, 29);
-        RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
+        RentalAgreement actual = controller.checkout("LADW", 2, 0, date);
 
-        assertEquals(new BigDecimal("1.99"), actual.getFinalCharge());
+        assertEquals(new BigDecimal("3.98"), actual.getFinalCharge());
     }
 
     @Test
@@ -149,5 +149,21 @@ public class ToolRentalControllerTest {
         RentalAgreement actual = controller.checkout("JAKR", 2, 0, date);
 
         assertEquals(new BigDecimal("2.99"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenALadderRental_WhenRentingForJuly4th_ThenTheCostIs0(){
+        date = LocalDate.of(2019, 07, 03);
+        RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
+
+        assertEquals(new BigDecimal("0.00"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenALadderRental_WhenRentingForMondayJuly5th_ThenTheCostIs0(){
+        date = LocalDate.of(2021, 07, 04);
+        RentalAgreement actual = controller.checkout("LADW", 1, 0, date);
+
+        assertEquals(new BigDecimal("0.00"), actual.getFinalCharge());
     }
 }
