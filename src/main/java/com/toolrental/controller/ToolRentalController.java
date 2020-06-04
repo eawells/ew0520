@@ -23,7 +23,7 @@ public class ToolRentalController {
         }
         rentalAgreement.setChargeableDays(chargeableDays);
 
-        BigDecimal total = rentedTool.getType().getDailyCost().multiply(new BigDecimal(rentalDayCount));
+        BigDecimal total = rentedTool.getType().getDailyCost().multiply(new BigDecimal(chargeableDays));
         if(discountPercent > 0){
             double percent = (double) discountPercent/100;
             BigDecimal discountAmount = total.multiply(new BigDecimal(percent)).setScale(2, RoundingMode.HALF_UP);

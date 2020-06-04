@@ -91,4 +91,12 @@ public class ToolRentalControllerTest {
 
         assertEquals(2, actual.getChargeableDays());
     }
+
+    @Test
+    public void givenAChainsawRental_WhenRentingFor2WeekdaysAndWeekend_ThenCostIs298Cents(){
+        date = LocalDate.of(2020, 05, 29);
+        RentalAgreement actual = controller.checkout("CHNS", 4, 0, date);
+
+        assertEquals(new BigDecimal("2.98"), actual.getFinalCharge());
+    }
 }
