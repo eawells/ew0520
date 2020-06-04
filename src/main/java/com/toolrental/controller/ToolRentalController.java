@@ -44,15 +44,19 @@ public class ToolRentalController {
     }
 
     private int calculateChargeableDays(int rentalDayCount, LocalDate checkoutDate, ToolType toolType) {
-        int chargeableDays = 0;
+        int chargeableDays = rentalDayCount;
         for(int i = 1; i <= rentalDayCount; i++){
-            if(isWeekday(checkoutDate.plusDays(i))){
-                chargeableDays++;
+            LocalDate currentDate = checkoutDate.plusDays(i);
+
+            if(!toolType.isHasWeekendCharge() && isWeekend(currentDate)){
+                chargeableDays--;
             }
-            else if(toolType.isHasWeekendCharge()){
-                chargeableDays++;
+
+            if(!toolType.isHasHolidayCharge() && isHoliday(currentDate)){
+                chargeableDays--;
             }
         }
+
         return chargeableDays;
     }
 
@@ -65,10 +69,17 @@ public class ToolRentalController {
         return discountAmount;
     }
 
-    private boolean isWeekday(LocalDate date){
+    private boolean isWeekend(LocalDate date){
         if(date.getDayOfWeek().getValue() == 6 || date.getDayOfWeek().getValue() == 7){
-            return false;
+            return true;
         }
-        return true;
+        return false;
+    }
+
+    private boolean isHoliday(LocalDate date) {
+        if(date.getMonth().getValue() == 7 && date.getDayOfMonth() == 4){
+            return true;
+        }
+        return false;
     }
 }
