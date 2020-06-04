@@ -18,7 +18,8 @@ public class ToolRentalController {
         BigDecimal total = rentedTool.getType().getDailyCost();
 
         if(discountPercent > 0){
-            BigDecimal discountAmount = total.multiply(new BigDecimal(.1)).setScale(2, RoundingMode.HALF_UP);
+            double percent = (double) discountPercent/100;
+            BigDecimal discountAmount = total.multiply(new BigDecimal(percent)).setScale(2, RoundingMode.HALF_UP);
             total = total.subtract(discountAmount);
         }
 
