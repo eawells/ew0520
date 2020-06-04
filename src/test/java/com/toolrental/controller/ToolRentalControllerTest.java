@@ -16,7 +16,7 @@ public class ToolRentalControllerTest {
     @Before
     public void setUp(){
         controller = new ToolRentalController();
-        date = LocalDate.of(2020, 05, 28);
+        date = LocalDate.of(2020, 05, 27);
     }
 
     @Test
@@ -66,5 +66,21 @@ public class ToolRentalControllerTest {
         RentalAgreement actual = controller.checkout("JAKD", 2, 0, date);
 
         assertEquals(new BigDecimal("5.98"), actual.getFinalCharge());
+    }
+
+    @Test
+    public void givenAChainsawRental_WhenRentingForWeekend_ThenChargeableDaysIs0(){
+        date = LocalDate.of(2020, 05, 29);
+        RentalAgreement actual = controller.checkout("CHNS", 2, 0, date);
+
+        assertEquals(0, actual.getChargeableDays());
+    }
+
+    @Test
+    public void givenAChainsawRental_WhenRentingFor1WeekdayAndWeekend_ThenChargeableDaysIs1(){
+        date = LocalDate.of(2020, 05, 29);
+        RentalAgreement actual = controller.checkout("CHNS", 3, 0, date);
+
+        assertEquals(1, actual.getChargeableDays());
     }
 }
