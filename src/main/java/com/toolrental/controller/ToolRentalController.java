@@ -59,11 +59,11 @@ public class ToolRentalController {
         for(int i = 1; i <= rentalDayCount; i++){
             LocalDate currentDate = checkoutDate.plusDays(i);
 
-            if(!toolType.isHasWeekendCharge() && isWeekend(currentDate)){
+            if(!toolType.isWeekendChargeable() && isWeekend(currentDate)){
                 chargeableDays--;
             }
 
-            if(!toolType.isHasHolidayCharge() && isHoliday(currentDate)){
+            if(!toolType.isHolidayChargeable() && isHoliday(currentDate)){
                 chargeableDays--;
             }
         }

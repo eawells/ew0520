@@ -11,7 +11,8 @@ import java.math.BigDecimal;
 public class ToolType {
     private String type;
     private BigDecimal dailyCost;
-    private boolean hasWeekdayCharge;
-    private boolean hasWeekendCharge;
-    private boolean hasHolidayCharge;
+    private boolean weekdayChargeable;
+    private boolean weekendChargeable;
+    private boolean holidayChargeable;
+
 }
