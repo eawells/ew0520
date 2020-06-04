@@ -203,4 +203,12 @@ public class ToolRentalControllerTest {
 
         controller.checkout("LADW", 1, -1, date);
     }
+
+    @Test
+    public void givenALadderRental_WhenRentalDayCountIs0_ThenErrorIsThrown(){
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage("Please enter at least one day for renting tool");
+
+        controller.checkout("LADW", 0, 0, date);
+    }
 }
