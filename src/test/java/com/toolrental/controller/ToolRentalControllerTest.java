@@ -99,4 +99,15 @@ public class ToolRentalControllerTest {
 
         assertEquals(new BigDecimal("2.98"), actual.getFinalCharge());
     }
+
+    @Test
+    public void givenAChainsawRental_WhenRentingFor1Weekday_ThenRentalAgreementContainsAllFields(){
+        RentalAgreement expected = new RentalAgreement("CHNS", "Chainsaw", "Stihl",
+                1, date, date.plusDays(1), new BigDecimal("1.49"), 1, new BigDecimal("1.49"),
+                0, new BigDecimal("0"), new BigDecimal("1.49"));
+
+        RentalAgreement actual = controller.checkout("CHNS", 1, 0, date);
+
+        assertEquals(expected, actual);
+    }
 }

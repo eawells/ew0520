@@ -13,15 +13,27 @@ public class ToolRentalController {
 
     public RentalAgreement checkout(String toolCode, int rentalDayCount, int discountPercent, LocalDate checkoutDate) {
         RentalAgreement rentalAgreement = new RentalAgreement();
+        rentalAgreement.setToolCode(toolCode);
         Tool rentedTool = repository.getTool(toolCode);
+
+        rentalAgreement.setToolType(rentedTool.getType().getType());
+        rentalAgreement.setToolBrand(rentedTool.getBrand());
+
+        rentalAgreement.setRentalDays(rentalDayCount);
+        rentalAgreement.setCheckoutDate(checkoutDate);
+        rentalAgreement.setDueDate(checkoutDate.plusDays(rentalDayCount));
 
         int chargeableDays = calculateChargeableDays(rentalDayCount, checkoutDate);
         rentalAgreement.setChargeableDays(chargeableDays);
 
         BigDecimal dailyCost = rentedTool.getType().getDailyCost();
+        rentalAgreement.setDailyCharge(dailyCost);
         BigDecimal total = dailyCost.multiply(new BigDecimal(chargeableDays));
+        rentalAgreement.setPreDiscountCharge(total);
+        rentalAgreement.setDiscountPercent(discountPercent);
 
         BigDecimal discountAmount = calculateDiscount(discountPercent, total);
+        rentalAgreement.setDiscountAmount(discountAmount);
 
         total = total.subtract(discountAmount);
         rentalAgreement.setFinalCharge(total);
