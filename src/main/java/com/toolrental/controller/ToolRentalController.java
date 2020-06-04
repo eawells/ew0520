@@ -15,24 +15,37 @@ public class ToolRentalController {
         RentalAgreement rentalAgreement = new RentalAgreement();
         Tool rentedTool = repository.getTool(toolCode);
 
+        int chargeableDays = calculateChargeableDays(rentalDayCount, checkoutDate);
+        rentalAgreement.setChargeableDays(chargeableDays);
+
+        BigDecimal dailyCost = rentedTool.getType().getDailyCost();
+        BigDecimal total = dailyCost.multiply(new BigDecimal(chargeableDays));
+
+        BigDecimal discountAmount = calculateDiscount(discountPercent, total);
+
+        total = total.subtract(discountAmount);
+        rentalAgreement.setFinalCharge(total);
+
+        return rentalAgreement;
+    }
+
+    private int calculateChargeableDays(int rentalDayCount, LocalDate checkoutDate) {
         int chargeableDays = 0;
         for(int i = 1; i <= rentalDayCount; i++){
             if(isWeekday(checkoutDate.plusDays(i))){
                 chargeableDays++;
             }
         }
-        rentalAgreement.setChargeableDays(chargeableDays);
+        return chargeableDays;
+    }
 
-        BigDecimal total = rentedTool.getType().getDailyCost().multiply(new BigDecimal(chargeableDays));
+    private BigDecimal calculateDiscount(int discountPercent, BigDecimal total) {
+        BigDecimal discountAmount = new BigDecimal("0");
         if(discountPercent > 0){
             double percent = (double) discountPercent/100;
-            BigDecimal discountAmount = total.multiply(new BigDecimal(percent)).setScale(2, RoundingMode.HALF_UP);
-            total = total.subtract(discountAmount);
+            discountAmount = total.multiply(new BigDecimal(percent)).setScale(2, RoundingMode.HALF_UP);
         }
-
-        rentalAgreement.setFinalCharge(total);
-
-        return rentalAgreement;
+        return discountAmount;
     }
 
     private boolean isWeekday(LocalDate date){
